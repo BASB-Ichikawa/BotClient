@@ -28,11 +28,16 @@ async function onStartRecording() {
     alert('stop')
     console.log(chunks)
   });
+
+  recorder.addEventListener('inacticve', function () {
+    alert('inacticve')
+    console.log(chunks)
+  });
 };
 
 async function onStopRecording() {
   alert('onStopRecording')
-  recorder.stop();
+  recorder.inacticve();
 }
 </script>
 
