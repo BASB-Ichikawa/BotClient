@@ -14,9 +14,7 @@ onMounted(async () => {
   recorder = new MediaRecorder(stream, {
     mimeType: 'video/webm;codecs=vp9'
   });
-})
 
-async function onStartRecording() {
   const chunks = <any>[];
   recorder.addEventListener('dataavailable', function (ele: any) {
     if (ele.data.size > 0) {
@@ -25,19 +23,16 @@ async function onStartRecording() {
   });
 
   recorder.addEventListener('stop', function () {
-    alert('stop')
     console.log(chunks)
   });
+})
 
-  recorder.addEventListener('inacticve', function () {
-    alert('inacticve')
-    console.log(chunks)
-  });
+async function onStartRecording() {
+  recorder.start();
 };
 
 async function onStopRecording() {
-  alert('onStopRecording')
-  recorder.inacticve();
+  recorder.stop();
 }
 </script>
 
