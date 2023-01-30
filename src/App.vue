@@ -12,7 +12,7 @@ onMounted(async () => {
     video: false
   })
 
-  const recorder = new MediaRecorder(stream, {
+  recorder = new MediaRecorder(stream, {
     mimeType: 'video/webm;codecs=vp9'
   });
 })
