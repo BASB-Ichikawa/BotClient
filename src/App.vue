@@ -14,7 +14,8 @@ onMounted(async () => {
   })
 
   recorder = new MediaRecorder(stream, {
-    mimeType: 'video/webm;codecs=vp9'
+    //mimeType: 'video/webm;codecs=vp9'
+    mimeType: 'video/webm'
   });
 
   const chunks = <any>[];
