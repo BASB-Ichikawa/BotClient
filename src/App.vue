@@ -25,6 +25,8 @@ onMounted(async () => {
   });
 
   recorder.addEventListener('stop', function () {    
+    console.log(chunks)
+    
     chunks.forEach(async (chunk: any, index: number) => {
       let data = new FormData();
       fileNames.value.push(`audio${index + 1}.wav`)
