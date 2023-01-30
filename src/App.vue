@@ -31,6 +31,7 @@ async function onStartRecording() {
 };
 
 async function onStopRecording() {
+  alert('onStopRecording')
   recorder.stop();
 }
 </script>
