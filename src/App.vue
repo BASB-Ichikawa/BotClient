@@ -3,6 +3,7 @@ import { onMounted } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
 import * as SpeechSDK from "microsoft-cognitiveservices-speech-sdk";
 // import * as axios from 'axios';
+import { BlobServiceClient} from "@azure/storage-blob";
 
 let recorder: any
 onMounted(async () => {
@@ -24,6 +25,11 @@ onMounted(async () => {
 
   recorder.addEventListener('stop', function () {
     console.log(chunks)
+
+    const blobServiceClient = new BlobServiceClient("https://stdllabpoc.blob.core.windows.net");
+    const containerClient = blobServiceClient.getContainerClient('audits');
+    const blockBlobClient = containerClient.getBlockBlobClient('audit');
+    blockBlobClient.uploadData(new Blob(chunks));
   });
 })
 
