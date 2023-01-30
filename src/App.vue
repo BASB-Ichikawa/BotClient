@@ -2,11 +2,20 @@
 import { onMounted } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
 import * as SpeechSDK from "microsoft-cognitiveservices-speech-sdk";
-// import * as axios from 'axios';
-import { BlobServiceClient} from "@azure/storage-blob";
+import * as axios from 'axios';
+import { BlobServiceClient } from "@azure/storage-blob";
 
 let recorder: any
 onMounted(async () => {
+  // Dummy
+  const chunks2 = <any>[];
+  let data = new FormData();
+  data.append('file', chunks2, 'audit.wav');
+  axios.post('https://app-bot-study.azurewebsites.net/api/upload', data, {
+    headers: { 'content-type': 'multipart/form-data' }
+  })
+
+
   const stream = await navigator.mediaDevices.getUserMedia({
     audio: true,
     video: false
@@ -26,11 +35,16 @@ onMounted(async () => {
   recorder.addEventListener('stop', function () {
     console.log(chunks)
 
-    const blobServiceClient = new BlobServiceClient("https://stdllabpoc.blob.core.windows.net");
-    const containerClient = blobServiceClient.getContainerClient('audits');
-    const blockBlobClient = containerClient.getBlockBlobClient('audit.wav');
-    //blockBlobClient.uploadData(new Blob(chunks));
-    blockBlobClient.uploadData(chunks);
+    let data = new FormData();
+    data.append('file', chunks, 'audit.wav');
+    axios.post('https://app-bot-study.azurewebsites.net/api/Conversation/Upload', data, {
+      headers: { 'content-type': 'multipart/form-data' }
+    })
+
+    // const blobServiceClient = new BlobServiceClient("https://stdllabpoc.blob.core.windows.net");
+    // const containerClient = blobServiceClient.getContainerClient('audits');
+    // const blockBlobClient = containerClient.getBlockBlobClient('audit.wav');
+    // blockBlobClient.uploadData(new Blob(chunks));
   });
 })
 
