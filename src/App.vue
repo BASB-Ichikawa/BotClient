@@ -24,15 +24,14 @@ onMounted(async () => {
     }
   });
 
-  recorder.addEventListener('stop', function () {    
-    console.log(chunks)
-    
+  recorder.addEventListener('stop', function () {
     chunks.forEach(async (chunk: any, index: number) => {
       let data = new FormData();
       fileNames.value.push(`audio${index + 1}.wav`)
       data.append('file', chunk, fileNames.value[index]);
       await axios.post('https://app-bot-study.azurewebsites.net/api/Conversation/Upload', data, {
-        headers: { 'content-type': 'multipart/form-data' }
+        //headers: { 'content-type': 'multipart/form-data' }
+        headers: { 'content-type': 'audio/wav' }        
       })
 
       console.log(fileNames.value[index])
