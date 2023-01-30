@@ -1,9 +1,11 @@
 <script setup lang="ts">
+import { onMounted } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
 import * as SpeechSDK from "microsoft-cognitiveservices-speech-sdk";
 // import * as axios from 'axios';
 
-async function onStartRecording() {
+let recorder: any
+onMounted(async () => {
   const stream = await navigator.mediaDevices.getUserMedia({
     audio: true,
     video: false
@@ -12,19 +14,24 @@ async function onStartRecording() {
   const recorder = new MediaRecorder(stream, {
     mimeType: 'video/webm;codecs=vp9'
   });
+})
 
-  const chunks = <any>[];  
-  recorder.addEventListener('dataavailable', function (ele) {
+async function onStartRecording() {
+  const chunks = <any>[];
+  recorder.addEventListener('dataavailable', function (ele: any) {
     if (ele.data.size > 0) {
       chunks.push(ele.data);
     }
   });
 
-  recorder.addEventListener('stop', function() {
+  recorder.addEventListener('stop', function () {
     console.log(chunks)
   });
 };
 
+async function onStopRecording() {
+  recorder.stop();
+}
 </script>
 
 <template>
@@ -33,6 +40,7 @@ async function onStartRecording() {
     <div class="wrapper">
       Speach To Text検証
       <button @click="onStartRecording">開始</button>
+      <button @click="onStopRecording">停止</button>
     </div>
   </header>
   <RouterView />
