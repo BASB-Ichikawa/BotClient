@@ -28,7 +28,7 @@ onMounted(async () => {
   recorder.addEventListener('stop', function () {
     chunks.forEach(async (chunk: any, index: number) => {
       let data = new FormData();
-      fileNames.value.push(`audio${index + 1}.wav`)
+      fileNames.value.push(`audio${index + 1}.mp3`)
       data.append('file', chunk, fileNames.value[index]);
       await axios.post('https://app-bot-study.azurewebsites.net/api/Conversation/Upload', data, {
         headers: { 'content-type': 'multipart/form-data' }
