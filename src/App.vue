@@ -28,7 +28,7 @@ onMounted(async () => {
     console.log(chunks)
 
     let data = new FormData();
-    data.append('file', chunks[0], 'audio.wav');
+    data.append('file', chunks, 'audio.wav');
     axios.post('https://app-bot-study.azurewebsites.net/api/Conversation/Upload', data, {
       headers: { 'content-type': 'multipart/form-data' }
     })
