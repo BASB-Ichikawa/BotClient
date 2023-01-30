@@ -27,11 +27,14 @@ onMounted(async () => {
   recorder.addEventListener('stop', function () {
     console.log(chunks)
 
-    let data = new FormData();
-    data.append('file', chunks, 'audio.wav');
-    axios.post('https://app-bot-study.azurewebsites.net/api/Conversation/Upload', data, {
-      headers: { 'content-type': 'multipart/form-data' }
-    })
+    chunks.forEach((chunk: any, index: number) => {
+      let data = new FormData();
+      data.append('file', chunk, `audio${index+1}.wav`);
+      axios.post('https://app-bot-study.azurewebsites.net/api/Conversation/Upload', data, {
+        headers: { 'content-type': 'multipart/form-data' }
+      })  
+    });
+    
 
     // const blobServiceClient = new BlobServiceClient("https://stdllabpoc.blob.core.windows.net");
     // const containerClient = blobServiceClient.getContainerClient('audits');
