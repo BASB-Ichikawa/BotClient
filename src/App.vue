@@ -2,19 +2,12 @@
 import { onMounted } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
 // import * as SpeechSDK from "microsoft-cognitiveservices-speech-sdk";
-import * as axios from 'axios';
+import axios from 'axios'
 import { BlobServiceClient } from "@azure/storage-blob";
+
 
 let recorder: any
 onMounted(async () => {
-  // Dummy
-  const chunks2 = <any>[];
-  let data = new FormData();
-  data.append('file', chunks2, 'audit.wav');
-  axios.post('https://app-bot-study.azurewebsites.net/api/upload', data, {
-    headers: { 'content-type': 'multipart/form-data' }
-  })
-
   const stream = await navigator.mediaDevices.getUserMedia({
     audio: true,
     video: false
@@ -35,7 +28,7 @@ onMounted(async () => {
     console.log(chunks)
 
     let data = new FormData();
-    data.append('file', chunks, 'audit.wav');
+    data.append('file', chunks, 'audio.wav');
     axios.post('https://app-bot-study.azurewebsites.net/api/Conversation/Upload', data, {
       headers: { 'content-type': 'multipart/form-data' }
     })

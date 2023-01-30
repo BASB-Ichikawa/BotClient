@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
