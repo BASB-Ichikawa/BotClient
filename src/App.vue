@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
-import * as SpeechSDK from "microsoft-cognitiveservices-speech-sdk";
+// import * as SpeechSDK from "microsoft-cognitiveservices-speech-sdk";
 import * as axios from 'axios';
 import { BlobServiceClient } from "@azure/storage-blob";
 
@@ -14,7 +14,6 @@ onMounted(async () => {
   axios.post('https://app-bot-study.azurewebsites.net/api/upload', data, {
     headers: { 'content-type': 'multipart/form-data' }
   })
-
 
   const stream = await navigator.mediaDevices.getUserMedia({
     audio: true,
