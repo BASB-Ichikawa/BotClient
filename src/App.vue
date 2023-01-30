@@ -6,6 +6,7 @@ import * as SpeechSDK from "microsoft-cognitiveservices-speech-sdk";
 
 let recorder: any
 onMounted(async () => {
+  alert();
   const stream = await navigator.mediaDevices.getUserMedia({
     audio: true,
     video: false
