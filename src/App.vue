@@ -30,8 +30,8 @@ onMounted(async () => {
       fileNames.value.push(`audio${index + 1}.wav`)
       data.append('file', chunk, fileNames.value[index]);
       await axios.post('https://app-bot-study.azurewebsites.net/api/Conversation/Upload', data, {
-        //headers: { 'content-type': 'multipart/form-data' }
-        headers: { 'content-type': 'audio/wav' }        
+        headers: { 'content-type': 'multipart/form-data' }
+        //headers: { 'content-type': 'audio/wav' }        
       })
 
       console.log(fileNames.value[index])
