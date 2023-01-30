@@ -28,8 +28,9 @@ onMounted(async () => {
 
     const blobServiceClient = new BlobServiceClient("https://stdllabpoc.blob.core.windows.net");
     const containerClient = blobServiceClient.getContainerClient('audits');
-    const blockBlobClient = containerClient.getBlockBlobClient('audit');
-    blockBlobClient.uploadData(new Blob(chunks));
+    const blockBlobClient = containerClient.getBlockBlobClient('audit.wav');
+    //blockBlobClient.uploadData(new Blob(chunks));
+    blockBlobClient.uploadData(chunks);
   });
 })
 
