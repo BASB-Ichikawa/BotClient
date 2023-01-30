@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
 // import * as SpeechSDK from "microsoft-cognitiveservices-speech-sdk";
 import axios from 'axios'
-import { BlobServiceClient } from "@azure/storage-blob";
-
 
 let recorder: any
+let fileNames = ref(<string[]>[])
+
 onMounted(async () => {
   const stream = await navigator.mediaDevices.getUserMedia({
     audio: true,
@@ -25,29 +25,24 @@ onMounted(async () => {
   });
 
   recorder.addEventListener('stop', function () {
-    console.log(chunks)
-
-    chunks.forEach((chunk: any, index: number) => {
+    chunks.forEach(async (chunk: any, index: number) => {
       let data = new FormData();
-      data.append('file', chunk, `audio${index+1}.wav`);
-      axios.post('https://app-bot-study.azurewebsites.net/api/Conversation/Upload', data, {
+      fileNames.value.push(`audio${index + 1}.wav`)
+      data.append('file', chunk, fileNames.value[index]);
+      await axios.post('https://app-bot-study.azurewebsites.net/api/Conversation/Upload', data, {
         headers: { 'content-type': 'multipart/form-data' }
-      })  
+      })
     });
-    
-
-    // const blobServiceClient = new BlobServiceClient("https://stdllabpoc.blob.core.windows.net");
-    // const containerClient = blobServiceClient.getContainerClient('audits');
-    // const blockBlobClient = containerClient.getBlockBlobClient('audit.wav');
-    // blockBlobClient.uploadData(new Blob(chunks));
   });
 })
 
 async function onStartRecording() {
+  alert("録音開始")
   recorder.start();
 };
 
 async function onStopRecording() {
+  alert("録音停止")
   recorder.stop();
 }
 </script>
@@ -55,13 +50,22 @@ async function onStopRecording() {
 <template>
   <header>
     <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-    <div class="wrapper">
-      Speach To Text検証
-      <button @click="onStartRecording">開始</button>
+
+  </header>
+  <div style="display: flex; flex-direction: column;">
+    <p style="display: flex; justify-content: center">Speach To Text検証</p>
+    <div style="display: flex; justify-content: center; margin-top: 10px;">
+      <button @click="onStartRecording" style="margin-right: 10px">開始</button>
       <button @click="onStopRecording">停止</button>
     </div>
-  </header>
-  <RouterView />
+    <div>
+      <ul>
+        <li v-for="name in fileNames">
+          <a :href="'https://stdllabpoc.blob.core.windows.net/audits/' + name">{{name}}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
 </template>
 
 <style scoped>
