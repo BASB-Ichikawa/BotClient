@@ -35,7 +35,7 @@ onMounted(async () => {
         headers: { 'content-type': 'multipart/form-data' }
       })
 
-      console.log(result)
+      alert(result.data)
     });
   });
 })
