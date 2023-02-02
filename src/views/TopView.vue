@@ -31,7 +31,7 @@ onMounted(async () => {
       let data = new FormData();
       fileNames.value.push(`audio${index + 1}.webm`)
       data.append('file', chunk, fileNames.value[index]);
-      const result = await axios.post('https://app-bot-study.azurewebsites.net/api/Conversation/Convert', data, {
+      const result = await axios.post('https://app-bot-study.azurewebsites.net/api/Conversation/Upload', data, {
         headers: { 'content-type': 'multipart/form-data' }
       })
 
