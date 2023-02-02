@@ -15,18 +15,19 @@ onMounted(async () => {
   })
 
   recorder = new MediaRecorder(stream, {
-    mimeType: 'video/webm;codecs=vp9'
-    //mimeType: 'audio/webm'
+    //mimeType: 'video/webm;codecs=vp9'
+    mimeType: 'audio/webm'
   });
 
   const chunks = <any>[];
-  recorder.addEventListener('dataavailable', function (ele: any) {
-    if (ele.data.size > 0) {
-      chunks.push(ele.data);
+  recorder.addEventListener('dataavailable', function (element: any) {
+    if (element.data.size > 0) {
+      chunks.push(element.data);
     }
   });
 
   recorder.addEventListener('stop', function () {
+    alert(chunks.length)
     chunks.forEach(async (chunk: any, index: number) => {
       let data = new FormData();
       fileNames.value.push(`audio${index + 1}.webm`)
