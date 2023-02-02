@@ -35,8 +35,7 @@ onMounted(async () => {
         headers: { 'content-type': 'multipart/form-data' }
       })
 
-      alert(result)
-      console.log(fileNames.value[index])
+      console.log(result)
     });
   });
 })
