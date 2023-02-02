@@ -62,7 +62,7 @@ async function onStopRecording() {
     <p>BLOBに保存した元の音声データ</p>
     <ul>
       <li v-for="name in fileNames">
-        <a :href="'https://stdllabpoc.blob.core.windows.net/audits/' + name">{{ name }}</a>
+        <a :href="'https://stdllabpoc.blob.core.windows.net/audio/' + name">{{ name }}</a>
       </li>
     </ul>
   </div>
