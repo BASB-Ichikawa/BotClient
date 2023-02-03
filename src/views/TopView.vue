@@ -27,8 +27,6 @@ onMounted(async () => {
   });
 
   recorder.addEventListener('stop', function () {
-    recognizedContent.value = '';
-    
     chunks.forEach(async (chunk: any, index: number) => {
       let data = new FormData();
       originalFileNames.value.push(`audio${index + 1}.webm`)
@@ -38,7 +36,7 @@ onMounted(async () => {
       })
 
       convertedFileNames.value.push(result.data.fileName)
-      recognizedContent.value += result.data.recognizedText;
+      recognizedContent.value = result.data.recognizedText;
     });
   });
 })
