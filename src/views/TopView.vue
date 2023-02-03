@@ -42,6 +42,7 @@ onMounted(async () => {
 })
 
 async function onStartRecording() {
+  convertedFileNames.value.length = 0;
   recognizedContent.value = '録音中...';
   recorder.start();
 };
