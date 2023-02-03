@@ -5,7 +5,9 @@ import { RouterLink, RouterView } from 'vue-router'
 import axios from 'axios'
 
 let recorder: any
-let fileNames = ref(<string[]>[])
+let originalFileNames = ref(<string[]>[])
+let convertedFileNames = ref(<string[]>[])
+let recognizedContent = ref(<string[]>[])
 
 onMounted(async () => {
   
@@ -27,16 +29,16 @@ onMounted(async () => {
   });
 
   recorder.addEventListener('stop', function () {
-    alert(chunks.length)
     chunks.forEach(async (chunk: any, index: number) => {
       let data = new FormData();
-      fileNames.value.push(`audio${index + 1}.webm`)
-      data.append('file', chunk, fileNames.value[index]);
+      originalFileNames.value.push(`audio${index + 1}.webm`)
+      data.append('file', chunk, originalFileNames.value[index]);
       const result = await axios.post('https://app-bot-study.azurewebsites.net/api/Conversation/Upload', data, {
         headers: { 'content-type': 'multipart/form-data' }
       })
 
-      alert(result.data)
+      convertedFileNames.value.push(result.data.fileName)
+      recognizedContent += result.data.text;
     });
   });
 })
@@ -59,12 +61,16 @@ async function onStopRecording() {
     <button @click="onStopRecording">停止</button>    
   </div>
   <div>
-    <p>BLOBに保存した元の音声データ</p>
+    <p>BLOBに保存した音声データ</p>
     <ul>
-      <li v-for="name in fileNames">
+      <li v-for="name in originalFileNames">
         <a :href="'https://stdllabpoc.blob.core.windows.net/audio/' + name">{{ name }}</a>
       </li>
     </ul>
+  </div>
+  <div>
+    <p>STT認識結果</p>
+    {{recognizedContent}}
   </div>
 </template>
 
