@@ -10,7 +10,7 @@ let convertedFileNames = ref(<string[]>[])
 let recognizedContent = ref('')
 
 onMounted(async () => {
-  
+
   const stream = await navigator.mediaDevices.getUserMedia({
     audio: true,
     video: false
@@ -55,24 +55,36 @@ async function onStopRecording() {
 </script>
 
 <template>
-  <p style="display: flex; justify-content: center">Speach To Text検証</p>
-  <div style="display: flex; justify-content: center; margin-top: 10px;">
-    <button @click="onStartRecording" style="margin-right: 10px">開始</button>
-    <button @click="onStopRecording">停止</button>    
-  </div>
-  <div>
-    <p>BLOBに保存した音声データ</p>
-    <ul>
-      <li v-for="name in recognizedContent">
-        <a :href="'https://stdllabpoc.blob.core.windows.net/audio/' + name">{{ name }}</a>
-      </li>
-    </ul>
-  </div>
-  <div>
-    <p>STT認識結果</p>
-    {{recognizedContent}}
-  </div>
+  <section>
+    <p style="display: flex; justify-content: center">【Speach To Text検証】</p>
+    <div class="section_action">
+      <button @click="onStartRecording" style="margin-right: 10px">開始</button>
+      <button @click="onStopRecording">停止</button>
+    </div>
+    <div class="section_content">
+      <p>■ BLOBに保存した音声データ</p>
+      <ul>
+        <li v-for="name in recognizedContent">
+          <a :href="'https://stdllabpoc.blob.core.windows.net/audio/' + name">{{ name }}</a>
+        </li>
+      </ul>
+    </div>
+    <div class="section_content">
+      <p>■ STT認識結果</p>
+      {{ recognizedContent }}
+    </div>
+  </section>
 </template>
 
 <style scoped>
+.section_action {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+}
+.section_content {
+  margin-top: 10px;
+  display: flex;
+  justify-content: start;
+}
 </style>
