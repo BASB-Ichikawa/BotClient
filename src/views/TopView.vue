@@ -28,6 +28,7 @@ onMounted(async () => {
 
   recorder.addEventListener('stop', function () {
     recognizedContent.value = '';
+    
     chunks.forEach(async (chunk: any, index: number) => {
       let data = new FormData();
       originalFileNames.value.push(`audio${index + 1}.webm`)
@@ -43,7 +44,7 @@ onMounted(async () => {
 })
 
 async function onStartRecording() {
-  alert("録音開始")
+  recognizedContent.value = '録音中...';
   recorder.start();
 };
 
