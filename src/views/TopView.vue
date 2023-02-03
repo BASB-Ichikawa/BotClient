@@ -36,7 +36,10 @@ onMounted(async () => {
       })
 
       convertedFileNames.value.push(result.data.fileName)
-      recognizedContent.value = result.data.recognizedText;
+      if(recognizedContent.value === '認識中...') {
+        recognizedContent.value = '';
+      }
+      recognizedContent.value += result.data.recognizedText;
     });
   });
 })
