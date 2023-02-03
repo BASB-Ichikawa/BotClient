@@ -38,6 +38,7 @@ onMounted(async () => {
 
       convertedFileNames.value.push(result.data.fileName)
       recognizedContent += result.data.recognizedText;
+      console.log(recognizedContent)
     });
   });
 })
@@ -69,7 +70,7 @@ async function onStopRecording() {
     </div>
     <div>
       <p class="section_title">■ STT認識結果</p>
-      <p>{{ recognizedContent }}</p>
+      <p>{{recognizedContent}}</p>
     </div>
   </section>
 </template>
