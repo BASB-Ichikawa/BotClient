@@ -36,7 +36,7 @@ onMounted(async () => {
       })
 
       convertedFileNames.value.push(result.data.fileName)
-      recognizedContent += result.data.text;
+      recognizedContent += result.data.recognizedText;
       alert(recognizedContent)
     });    
   });
@@ -57,7 +57,7 @@ async function onStopRecording() {
     <p style="display: flex; justify-content: center">【Speach To Text検証】</p>
     <div class="section_action">
       <button @click="onStartRecording" style="margin-right: 10px">録音開始</button>
-      <button @click="onStopRecording">停止->認識開始</button>
+      <button @click="onStopRecording">録音停止 -> 認識開始</button>
     </div>
     <div class="section_content">
       <p>■ BLOBに保存した音声データ</p>
