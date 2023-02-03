@@ -37,8 +37,7 @@ onMounted(async () => {
       })
 
       convertedFileNames.value.push(result.data.fileName)
-      recognizedContent += result.data.recognizedText;
-      console.log(recognizedContent)
+      recognizedContent.value += result.data.recognizedText;
     });
   });
 })
