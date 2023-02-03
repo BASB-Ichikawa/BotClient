@@ -7,7 +7,7 @@ import axios from 'axios'
 let recorder: any
 let originalFileNames = ref(<string[]>[])
 let convertedFileNames = ref(<string[]>[])
-let recognizedContent = ref(<string[]>[])
+let recognizedContent = ref('')
 
 onMounted(async () => {
   
@@ -63,7 +63,7 @@ async function onStopRecording() {
   <div>
     <p>BLOBに保存した音声データ</p>
     <ul>
-      <li v-for="name in originalFileNames">
+      <li v-for="name in recognizedContent">
         <a :href="'https://stdllabpoc.blob.core.windows.net/audio/' + name">{{ name }}</a>
       </li>
     </ul>
