@@ -49,6 +49,7 @@ async function onStartRecording() {
 };
 
 async function onStopRecording() {
+  recognizedContent.value = '認識中...';
   recorder.stop();
 }
 </script>
