@@ -40,6 +40,8 @@ onMounted(async () => {
       convertedFileNames.value.push(result.data.fileName)
       recognizedContent += result.data.text;
     });
+
+    alert(recognizedContent)
   });
 })
 
