@@ -37,7 +37,6 @@ onMounted(async () => {
 
       convertedFileNames.value.push(result.data.fileName)
       recognizedContent += result.data.recognizedText;
-      alert(recognizedContent)
     });    
   });
 })
@@ -62,7 +61,7 @@ async function onStopRecording() {
     <div class="section_content">
       <p>■ BLOBに保存した音声データ</p>
       <ul>
-        <li v-for="name in recognizedContent">
+        <li v-for="name in convertedFileNames">
           <a :href="'https://stdllabpoc.blob.core.windows.net/audio/' + name">{{ name }}</a>
         </li>
       </ul>
