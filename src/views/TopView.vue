@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { RouterLink, RouterView } from 'vue-router'
 // import * as SpeechSDK from "microsoft-cognitiveservices-speech-sdk";
 import axios from 'axios'
 
@@ -10,7 +9,6 @@ let convertedFileNames = ref(<string[]>[])
 let recognizedContent = ref('')
 
 onMounted(async () => {
-
   const stream = await navigator.mediaDevices.getUserMedia({
     audio: true,
     video: false
@@ -39,9 +37,8 @@ onMounted(async () => {
 
       convertedFileNames.value.push(result.data.fileName)
       recognizedContent += result.data.text;
-    });
-
-    alert(recognizedContent)
+      alert(recognizedContent)
+    });    
   });
 })
 
@@ -51,7 +48,6 @@ async function onStartRecording() {
 };
 
 async function onStopRecording() {
-  alert("録音停止")
   recorder.stop();
 }
 </script>
@@ -60,8 +56,8 @@ async function onStopRecording() {
   <section>
     <p style="display: flex; justify-content: center">【Speach To Text検証】</p>
     <div class="section_action">
-      <button @click="onStartRecording" style="margin-right: 10px">開始</button>
-      <button @click="onStopRecording">停止</button>
+      <button @click="onStartRecording" style="margin-right: 10px">録音開始</button>
+      <button @click="onStopRecording">停止->認識開始</button>
     </div>
     <div class="section_content">
       <p>■ BLOBに保存した音声データ</p>
