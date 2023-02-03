@@ -6,7 +6,7 @@ import axios from 'axios'
 let recorder: any
 let originalFileNames = ref(<string[]>[])
 let convertedFileNames = ref(<string[]>[])
-let recognizedContent = ref('')
+let recognizedContent = ref('<認識済みテキストを表示>')
 
 onMounted(async () => {
   const stream = await navigator.mediaDevices.getUserMedia({
@@ -27,6 +27,7 @@ onMounted(async () => {
   });
 
   recorder.addEventListener('stop', function () {
+    recognizedContent.value = '';
     chunks.forEach(async (chunk: any, index: number) => {
       let data = new FormData();
       originalFileNames.value.push(`audio${index + 1}.webm`)
@@ -37,7 +38,7 @@ onMounted(async () => {
 
       convertedFileNames.value.push(result.data.fileName)
       recognizedContent += result.data.recognizedText;
-    });    
+    });
   });
 })
 
@@ -58,17 +59,17 @@ async function onStopRecording() {
       <button @click="onStartRecording" style="margin-right: 10px">録音開始</button>
       <button @click="onStopRecording">録音停止 -> 認識開始</button>
     </div>
-    <div class="section_content">
-      <p>■ BLOBに保存した音声データ</p>
+    <div>
+      <p class="section_title">■ BLOBに保存した音声データ</p>
       <ul>
         <li v-for="name in convertedFileNames">
           <a :href="'https://stdllabpoc.blob.core.windows.net/audio/' + name">{{ name }}</a>
         </li>
       </ul>
     </div>
-    <div class="section_content">
-      <p>■ STT認識結果</p>
-      {{ recognizedContent }}
+    <div>
+      <p class="section_title">■ STT認識結果</p>
+      <p>{{ recognizedContent }}</p>
     </div>
   </section>
 </template>
@@ -79,7 +80,8 @@ async function onStopRecording() {
   display: flex;
   justify-content: center;
 }
-.section_content {
+
+.section_title {
   margin-top: 10px;
   display: flex;
   justify-content: start;
