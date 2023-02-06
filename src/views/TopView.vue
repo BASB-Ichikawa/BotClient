@@ -62,17 +62,17 @@ async function onStopRecording() {
 }
 
 async function onConfirmAuth() {
-  // const result = await axios.post('https://localhost:7148/api/Conversation/CheckAuth', {}, {
-  //   headers: {
-  //     Authorization: `Bearer ${accessToken}`
-  //   }
-  // })
-
-  const result = await axios.post('https://app-bot-study.azurewebsites.net/api/Conversation/CheckAuth', {}, {
+  const result = await axios.post(`${import.meta.env.VITE_API_URL}/api/Conversation/CheckAuth`, {}, {
     headers: {
       Authorization: `Bearer ${accessToken}`
     }
   })
+
+  // const result = await axios.post('https://app-bot-study.azurewebsites.net/api/Conversation/CheckAuth', {}, {
+  //   headers: {
+  //     Authorization: `Bearer ${accessToken}`
+  //   }
+  // })
 }
 </script>
 
