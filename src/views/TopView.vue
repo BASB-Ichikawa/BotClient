@@ -62,7 +62,13 @@ async function onStopRecording() {
 }
 
 async function onConfirmAuth() {
-  const result = await axios.post('https://localhost:7148/api/Conversation/CheckAuth', {}, {
+  // const result = await axios.post('https://localhost:7148/api/Conversation/CheckAuth', {}, {
+  //   headers: {
+  //     Authorization: `Bearer ${accessToken}`
+  //   }
+  // })
+
+  const result = await axios.post('https://proud-meadow-03aee4e00.2.azurestaticapps.net/api/Conversation/CheckAuth', {}, {
     headers: {
       Authorization: `Bearer ${accessToken}`
     }
