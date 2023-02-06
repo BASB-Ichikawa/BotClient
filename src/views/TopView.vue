@@ -7,41 +7,47 @@ let recorder: any
 let originalFileNames = ref(<string[]>[])
 let convertedFileNames = ref(<string[]>[])
 let recognizedContent = ref('<認識済みテキストを表示>')
+let accessToken: string | null
 
 onMounted(async () => {
-  const stream = await navigator.mediaDevices.getUserMedia({
-    audio: true,
-    video: false
-  })
+  accessToken = localStorage.getItem('token')
 
-  recorder = new MediaRecorder(stream, {
-    //mimeType: 'video/webm;codecs=vp9'
-    mimeType: 'audio/webm'
-  });
+  // const stream = await navigator.mediaDevices.getUserMedia({
+  //   audio: true,
+  //   video: false
+  // })
 
-  const chunks = <any>[];
-  recorder.addEventListener('dataavailable', function (element: any) {
-    if (element.data.size > 0) {
-      chunks.push(element.data);
-    }
-  });
+  // recorder = new MediaRecorder(stream, {
+  //   //mimeType: 'video/webm;codecs=vp9'
+  //   mimeType: 'audio/webm'
+  // });
 
-  recorder.addEventListener('stop', function () {
-    chunks.forEach(async (chunk: any, index: number) => {
-      let data = new FormData();
-      originalFileNames.value.push(`audio${index + 1}.webm`)
-      data.append('file', chunk, originalFileNames.value[index]);
-      const result = await axios.post('https://app-bot-study.azurewebsites.net/api/Conversation/Upload', data, {
-        headers: { 'content-type': 'multipart/form-data' }
-      })
+  // const chunks = <any>[];
+  // recorder.addEventListener('dataavailable', function (element: any) {
+  //   if (element.data.size > 0) {
+  //     chunks.push(element.data);
+  //   }
+  // });
 
-      convertedFileNames.value.push(result.data.fileName)
-      if(recognizedContent.value === '認識中...') {
-        recognizedContent.value = '';
-      }
-      recognizedContent.value += result.data.recognizedText;
-    });
-  });
+  // recorder.addEventListener('stop', function () {
+  //   chunks.forEach(async (chunk: any, index: number) => {
+  //     let data = new FormData();
+  //     originalFileNames.value.push(`audio${index + 1}.webm`)
+  //     data.append('file', chunk, originalFileNames.value[index]);
+  //     const result = await axios.post('https://app-bot-study.azurewebsites.net/api/Conversation/Upload', data, {
+  //       headers: {
+  //         Authorization: `Bearer ${accessToken}`,
+  //         'Content-Type': 'multipart/form-data'
+  //       }
+  //     })
+
+  //     convertedFileNames.value.push(result.data.fileName)
+  //     if (recognizedContent.value === '認識中...') {
+  //       recognizedContent.value = '';
+  //     }
+  //     recognizedContent.value += result.data.recognizedText;
+  //   });
+  // });
 })
 
 async function onStartRecording() {
@@ -54,11 +60,19 @@ async function onStopRecording() {
   recognizedContent.value = '認識中...';
   recorder.stop();
 }
+
+async function onConfirmAuth() {
+  const result = await axios.post('https://localhost:7148/api/Conversation/CheckAuth', {}, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`
+    }
+  })
+}
 </script>
 
 <template>
   <section>
-    <p style="display: flex; justify-content: center">【Speach To Text検証】</p>
+    <p style="display: flex; justify-content: center">【Speech To Text検証】</p>
     <div class="section_action">
       <button @click="onStartRecording" style="margin-right: 10px">録音開始</button>
       <button @click="onStopRecording">録音停止 -> 認識開始</button>
@@ -73,7 +87,11 @@ async function onStopRecording() {
     </div>
     <div>
       <p class="section_title">■ STT認識結果</p>
-      <p>{{recognizedContent}}</p>
+      <p>{{ recognizedContent }}</p>
+    </div>
+    <div>
+      <p>アクセス許可確認</p>
+      <button @click="onConfirmAuth" style="margin-right: 10px">確認</button>
     </div>
   </section>
 </template>
