@@ -12,7 +12,7 @@ const config = {
     //redirectUri: 'https://proud-meadow-03aee4e00.2.azurestaticapps.net'
   },
   cache: {
-    cacheLocation: "localStorage",
+    cacheLocation: "sessionStorage",
     storeAuthStateInCookie: false,
   }
 }
