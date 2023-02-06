@@ -8,8 +8,8 @@ const config = {
     clientId: '18c62a00-926f-4275-8e03-65342c3051e1', // SPA側のクライアントID
     authority: 'https://login.microsoftonline.com/aca5139d-3b2d-489e-b94b-1d7277819e3b',
     //authority: 'https://login.microsoftonline.com/organizations', // マルチテナント用の設定 (但し、MSが公式に許可しているサービス(GrapAPIなど)のAPIに限る)
-    redirectUri: "http://localhost:5173"
-    // redirectUri: 'https://proud-meadow-03aee4e00.2.azurestaticapps.net'
+    //redirectUri: "http://localhost:5173"
+    redirectUri: 'https://proud-meadow-03aee4e00.2.azurestaticapps.net'
   },
   cache: {
     cacheLocation: "localStorage",
