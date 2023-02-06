@@ -21,7 +21,6 @@ const router = useRouter();
 let app: PublicClientApplication = new PublicClientApplication(config)
 
 onMounted(async () => {
-  //console.log(import.meta.env.VITE_WEB_URL)
   app.handleRedirectPromise().then(async (response: any) => {
     if (response !== null) {
       if (app.getAllAccounts().length > 0) {
