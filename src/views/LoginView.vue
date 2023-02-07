@@ -5,8 +5,8 @@ import { PublicClientApplication } from "@azure/msal-browser"
 
 const config = {
   auth: {
-    clientId: '18c62a00-926f-4275-8e03-65342c3051e1', // SPA側のクライアントID
-    authority: 'https://login.microsoftonline.com/aca5139d-3b2d-489e-b94b-1d7277819e3b',
+    clientId: '02a46cb4-3c1e-46a0-b2c3-e8c5e6ac14b9', // SPA側のクライアントID
+    authority: 'https://login.microsoftonline.com/16b3c013-d300-468d-ac64-7eda0820b6d3',
     //authority: 'https://login.microsoftonline.com/organizations', // マルチテナント用の設定 (但し、MSが公式に許可しているサービス(GrapAPIなど)のAPIに限る)
     redirectUri: import.meta.env.VITE_WEB_URL
     //redirectUri: 'https://proud-meadow-03aee4e00.2.azurestaticapps.net'
