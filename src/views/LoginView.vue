@@ -9,7 +9,6 @@ const config = {
     authority: 'https://login.microsoftonline.com/aca5139d-3b2d-489e-b94b-1d7277819e3b',
     //authority: 'https://login.microsoftonline.com/organizations', // マルチテナント用の設定 (但し、MSが公式に許可しているサービス(GrapAPIなど)のAPIに限る)
     redirectUri: import.meta.env.VITE_WEB_URL
-    //redirectUri: 'https://proud-meadow-03aee4e00.2.azurestaticapps.net'
   },
   cache: {
     cacheLocation: "sessionStorage",
@@ -29,9 +28,8 @@ onMounted(async () => {
           // APIを公開した時に発行されるスコープ値 (SPA側に事前にアクセス許可を追加しておく必要あり)
           scopes: ['api://c527d880-7610-4fd4-918e-bbbda5d7a2b2/WebApiUsingDirectLine'],
         })
-        console.log(result)
-        localStorage.setItem('token', result.accessToken)
         
+        localStorage.setItem('token', result.accessToken)        
         router.push('/top')
       }
     }
@@ -46,6 +44,7 @@ async function onClickLogin() {
     })
 
     localStorage.setItem('token', result.accessToken)
+    router.push('/top')
   } else {
     // Redirect型ログイン
     await app.acquireTokenRedirect({
