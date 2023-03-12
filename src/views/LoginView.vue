@@ -30,7 +30,7 @@ app.handleRedirectPromise()
     .catch((error) => console.error(error) );
 
 onMounted(async () => {
-  console.log(location.hash.split('&'))
+  // console.log(location.hash.split('&'))
 })
 
 async function handleResponse(response: void | AuthenticationResult | null) {
@@ -41,10 +41,9 @@ async function handleResponse(response: void | AuthenticationResult | null) {
       // アクセストークンを取得
       const result = await app.acquireTokenSilent({
         // APIを公開した時に発行されるスコープ値 (SPA側のSPに事前にアクセス許可を追加しておく必要あり)
-        //scopes: ['api://c527d880-7610-4fd4-918e-bbbda5d7a2b2/WebApiUsingDirectLine'],
-        scopes: ["User.Read"],
+        scopes: ['api://c527d880-7610-4fd4-918e-bbbda5d7a2b2/WebApiUsingDirectLine'],
+        //scopes: ["User.Read"],
       })
-      alert(result.accessToken)
       router.push('/top')
     }
   }
@@ -55,7 +54,8 @@ async function onClickLogin() {
   await app.acquireTokenRedirect({
     redirectStartPage: location.href,
     //redirectUri: location.href,    
-    scopes: ['User.Read']
+    scopes: ['api://c527d880-7610-4fd4-918e-bbbda5d7a2b2/WebApiUsingDirectLine'],
+    // scopes: ['User.Read']
   })
 
   // Popup型ログイン
@@ -69,14 +69,10 @@ async function onClickGetToken() {
   if (app.getAllAccounts().length > 0) {
     app.setActiveAccount(app.getAllAccounts()[0]);
     await app.acquireTokenSilent({
-      scopes: ['User.Read'],
+      scopes: ['api://c527d880-7610-4fd4-918e-bbbda5d7a2b2/WebApiUsingDirectLine'],
+      // scopes: ['User.Read'],
     })
     router.push('/top')
-  } else {
-    await app.acquireTokenRedirect({
-      redirectStartPage: location.href,
-      scopes: ['User.Read']
-    })
   }
 }
 

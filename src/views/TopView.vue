@@ -2,6 +2,7 @@
 import { onMounted, ref } from 'vue'
 // import * as SpeechSDK from "microsoft-cognitiveservices-speech-sdk";
 import axios from 'axios'
+import { PublicClientApplication, type AuthenticationResult } from "@azure/msal-browser"
 
 let recorder: any
 let originalFileNames = ref(<string[]>[])
@@ -9,8 +10,20 @@ let convertedFileNames = ref(<string[]>[])
 let recognizedContent = ref('<認識済みテキストを表示>')
 let accessToken: string | null
 
+const config = {
+  auth: {
+    clientId: '18c62a00-926f-4275-8e03-65342c3051e1', // SPA側のクライアントID (MSDNテナント)
+    authority: 'https://login.microsoftonline.com/aca5139d-3b2d-489e-b94b-1d7277819e3b', // MSDNテナント    
+  }
+}
+
 onMounted(async () => {
-  accessToken = localStorage.getItem('token')
+  var app = new PublicClientApplication(config)
+  let result = await app.acquireTokenSilent({
+    scopes: ['api://c527d880-7610-4fd4-918e-bbbda5d7a2b2/WebApiUsingDirectLine'],
+  });
+  accessToken = result.accessToken
+  console.log(accessToken);
 
   const stream = await navigator.mediaDevices.getUserMedia({
     audio: true,
